@@ -1,14 +1,20 @@
 package sk.tuke.magsa.tools.parser;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import sk.tuke.magsa.tools.metamodel.Entity;
 import sk.tuke.magsa.tools.metamodel.Model;
 import sk.tuke.magsa.tools.metamodel.Property;
+import sk.tuke.magsa.tools.metamodel.Type;
+
+import javax.sound.sampled.Port;
+import java.util.Arrays;
+
 
 public class LineParser {
     private static final char SEPARATOR = ':';
@@ -36,11 +42,48 @@ public class LineParser {
         }
     }
 
-    private Entity parse(String name, Reader reader) throws ParserException {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private Entity parse(String name, Reader reader) throws ParserException, IOException {
+        if(reader.ready()) {
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            HashSet<Property> properties = new HashSet<>();
+            String line;
+            int lineNumber = 0;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                lineNumber++;
+                if (line.charAt(0) != '#') {
+                    if (properties.contains(parseLine(line))) {
+                        System.out.println("Duplicate property on the line " + lineNumber);
+                    } else {
+                        properties.add(parseLine(line));
+                    }
+                }
+            }
+
+
+            reader.close();
+            return new Entity(name, properties.toArray(new Property[properties.size()]));
+        }
+
+        return null;
     }
 
     private Property parseLine(String line) throws ParserException {
-        throw new UnsupportedOperationException("Not yet implemented");
+        String[] command = line.split(String.valueOf(SEPARATOR));
+        String propertyName = command[0].trim();
+        Type type = Type.STRING;
+
+        if (command.length == 2){
+            String typeName = command[1].trim();
+            if (typeName == "integer") {
+                type = Type.INTEGER;
+            }
+
+            if (typeName == "real") {
+                type = Type.REAL;
+            }
+        }
+
+        return new Property(propertyName, type);
     }
 }
