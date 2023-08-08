@@ -32,14 +32,9 @@
             <version>1.7</version>
         </dependency>
         <dependency>
-            <groupId>sk.tuke.yajco</groupId>
-            <artifactId>yajco-annotation-processor</artifactId>
-            <version>0.5.9</version>
-        </dependency>
-        <dependency>
-            <groupId>sk.tuke.yajco</groupId>
-            <artifactId>yajco-javacc-parser-generator-module</artifactId>
-            <version>0.5.9</version>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
         </dependency>
     </dependencies>
 </project>

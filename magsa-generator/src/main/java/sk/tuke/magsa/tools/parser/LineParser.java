@@ -52,14 +52,13 @@ public class LineParser {
             while ((line = bufferedReader.readLine()) != null) {
                 lineNumber++;
                 if (line.charAt(0) != '#') {
-                    if (properties.contains(parseLine(line))) {
-                        System.out.println("Duplicate property on the line " + lineNumber);
-                    } else {
+                    if (!properties.contains(parseLine(line))) {
                         properties.add(parseLine(line));
+                    } else {
+                        System.out.println("Problem with duplicate property on the line " + lineNumber);
                     }
                 }
             }
-
 
             reader.close();
             return new Entity(name, properties.toArray(new Property[properties.size()]));
@@ -74,12 +73,14 @@ public class LineParser {
         Type type = Type.STRING;
 
         if (command.length == 2){
+
             String typeName = command[1].trim();
-            if (typeName == "integer") {
+
+            if (typeName.equals("integer")) {
                 type = Type.INTEGER;
             }
 
-            if (typeName == "real") {
+            if (typeName.equals("real")) {
                 type = Type.REAL;
             }
         }
