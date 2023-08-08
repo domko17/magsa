@@ -22,9 +22,9 @@ public class Make {
 //        new DatabaseScriptGenerator(model).generate();
 
         /* Generators -  entity, dao interface, dao implementation */
-        new CollectionTemplateGenerator<Entity>(model, "entity_class", model.getEntities()).generate();
-        new CollectionTemplateGenerator<Entity>(model, "dao_interface", model.getEntities()).generate();
-        new CollectionTemplateGenerator<Entity>(model, "dao_impl", model.getEntities()).generate();
+//        new CollectionTemplateGenerator<Entity>(model, "entity_class", model.getEntities()).generate();
+//        new CollectionTemplateGenerator<Entity>(model, "dao_interface", model.getEntities()).generate();
+//        new CollectionTemplateGenerator<Entity>(model, "dao_impl", model.getEntities()).generate();
 
     }
 }
